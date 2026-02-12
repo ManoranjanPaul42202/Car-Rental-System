@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Rental System</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i> Car Rental
+    </div>
+
+    <div class="nav-search">
+        <form th:action="@{/dashboard/search}" method="get">
+            <input type="text" name="name" placeholder="Search cars..." />
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+
+    <div class="nav-links">
+        <a th:href="@{/dashboard}">Home</a>
+        <a th:href="@{/dashboard/book/list}">Bookings</a>
+        <div th:if="${isAdmin}">
+            <a th:href="@{/admin/dashboard}">FleetManager</a>
+        </div>
+
+        <!-- Profile Dropdown -->
+        <div class="dropdown">
+            <button class="dropbtn">
+                <i class="fa-solid fa-user"></i>
+                <span th:text="${username}">Username</span>
+
+                <!-- 🔴 Red dot if unseen notifications exist -->
+                <span th:if="${unseenCount > 0}" class="red-dot"></span>
+
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="javascript:void(0)" onclick="openModal()">
+                    <i class="fa-solid fa-bell"></i> Notifications
+                    <span id="unseen-count" th:if="${unseenCount > 0}" th:text="${unseenCount}" class="unseen-notifications"></span>
+                </a>
+                <a th:href="@{/login?logout}">
+                    <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Modal for Notifications -->
+<div id="notificationModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Notifications</h2>
+        <div class="notification-list">
+            <ul>
+                <li th:each="notification : ${notification}">
+                    <div class="notification-item">
+                        <p th:text="${notification.message}"></p>
+                        <div th:if="${notification.booking.rental == false}">
+                            <form th:action="@{'/booking/confirm/' + ${notification.booking.bookingId}}" method="get">
+                                <label class="terms-label">
+                                    <input type="checkbox" name="termsAccepted" required>
+                                    I agree to the <a href="/terms" target="_blank">terms and conditions</a>
+                                </label>
+                                <button type="submit" class="btn-confirm">Confirm Rental</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${notification != null and !notification.isEmpty()} ">
+            <form th:action="@{/notifications/read}" style="margin-top: 20px;">
+                <button type="submit" class="mark-read-btn">Mark All as Read</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="filter-sort-form">
+    <h2>Filter and Sort Cars</h2>
+    <form th:action="@{/dashboard/sort} + '#car-section'" method="get">
+        <div class="filter-group">
+            <label for="sortBy">Sort By</label>
+            <select name="sortBy" id="sortBy">
+                <option value="">-- Select --</option>
+                <option value="priceAsc">Price (Low to High)</option>
+                <option value="priceDesc">Price (High to Low)</option>
+                <option value="seats">Seating Capacity</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label for="state">State</label>
+            <input type="text" name="state" id="state" placeholder="Enter State">
+        </div>
+
+        <div class="filter-group">
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" placeholder="Enter City">
+        </div>
+
+        <button type="submit">Apply Filters</button>
+    </form>
+</div>
+<!-- Hero Section -->
+<section class="hero-section">
+    <h1>Find the Perfect Ride</h1>
+    <p>Whether you're heading for a road trip, a business meeting, or simply cruising the city, we’ve got a ride for every journey.</p>
+    <a href="#car-section" class="book-now-btn">Book Now</a>
+</section>
+
+<!-- Car Grid -->
+<div id="car-section" class="car-grid">
+    <div th:each="car : ${carList}" class="car-card">
+        <a th:href="@{'/dashboard/cars/' + ${car.carId}}" method="get">
+            <img th:src="@{'/images/' + ${car.image}}" alt="Car Image" class="car-img" />
+            <div class="car-info">
+                <h2 th:text="${car.name}">Car Name</h2>
+                <p><strong>Seats:</strong> <span th:text="${car.seatingCapacity}">4</span></p>
+                <p><strong>₹</strong><span th:text="${car.rentalPricePerDay}">1500</span>/day</p>
+            </div>
+        </a>
+    </div>
+    <div th:if="${#lists.isEmpty(carList)}" class="no-results">
+        <p>No cars found matching your search.</p>
+    </div>
+</div>
+
+<script>
+    // Function to open the modal
+    function openModal() {
+        document.getElementById("notificationModal").style.display = "block";
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        document.getElementById("notificationModal").style.display = "none";
+    }
+
+    // Check if there are any unseen notifications
+    window.onload = function() {
+        var unseenCount = parseInt(document.getElementById("unseen-count").innerText);
+    };
+</script>
+
+</body>
+</html>

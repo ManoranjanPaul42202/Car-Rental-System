@@ -1,0 +1,243 @@
+/* General Reset & Body */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f0f1b 0%, #1b1b2e 100%);
+    color: #eaeaea;
+    padding: 120px 60px 50px;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(30, 30, 47, 0.95);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(187, 134, 252, 0.2);
+    box-shadow: 0 4px 20px rgba(187, 134, 252, 0.05);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.navbar .logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #bb86fc;
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.navbar .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+}
+
+.navbar .nav-links a:hover {
+    color: #bb86fc;
+}
+
+.navbar .nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background-color: #bb86fc;
+    transition: width 0.3s ease-in-out;
+}
+
+.navbar .nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Headings */
+h2 {
+    margin-bottom: 20px;
+    color: #bb86fc;
+}
+
+h3 {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #fff;
+}
+
+p {
+    margin: 6px 0;
+    font-size: 15px;
+}
+
+/* Booking Container */
+.bookings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Card */
+.booking-card {
+    background: rgba(40, 40, 60, 0.85);
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+    border-left: 4px solid #bb86fc;
+}
+
+.booking-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: #bb86fc;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+/* Body */
+.card-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Car Image */
+.car-image img {
+    width: 260px;
+    height: 160px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #bb86fc33;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Booking Info */
+/* Fix for Car Name */
+.booking-info h3 {
+    color: #fff; /* Set car name to white */
+    font-size: 18px; /* Adjust size for better visibility */
+    font-weight: 600; /* Make it bolder */
+    text-decoration: none; /* Remove unwanted underlines */
+    margin: 0;
+    word-wrap: break-word;
+    letter-spacing: 1px; /* Increase letter spacing for better readability */
+    line-height: 1.5; /* Increase line height for more space between lines */
+}
+
+/* Remove any underlining from anchor links in booking info */
+.booking-info a {
+    text-decoration: none; /* No underline */
+    color: #bb86fc; /* Car name in a distinct color */
+    letter-spacing: 0.5px; /* Slightly increase spacing between letters */
+}
+
+.booking-info a:hover {
+    color: #d3b3ff; /* Light purple color when hovered */
+    text-decoration: underline; /* Underline only on hover */
+}
+
+
+
+/* Actions */
+.card-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 15px;
+}
+
+/* Buttons */
+button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Update */
+.update {
+    background: linear-gradient(135deg, #bb86fc, #a570d1);
+    color: white;
+}
+
+.update:hover {
+    background: linear-gradient(135deg, #a570d1, #bb86fc);
+    transform: translateY(-1px);
+}
+
+/* Delete */
+.delete {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+}
+
+.delete:hover {
+    background: linear-gradient(135deg, #d32f2f, #f44336);
+    transform: translateY(-1px);
+}
+
+form {
+    margin: 0;
+}
+
+/* Empty State */
+.no-bookings {
+    text-align: center;
+    margin-top: 40px;
+    color: #aaa;
+    font-size: 16px;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-left: 6px;
+    color: white;
+}
+
+.status-badge.pending {
+    background-color: #ffb74d;
+}
+
+.status-badge.confirmed {
+    background-color: #66bb6a;
+}
+
+.status-badge.cancelled {
+    background-color: #ef5350;
+}

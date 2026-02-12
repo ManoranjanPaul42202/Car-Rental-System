@@ -1,0 +1,683 @@
+/* Dashboard.css */
+
+/* Body Styling */
+/* Body Styling */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    color: #f5f5f5;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1a1a2e;
+    padding: 15px 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+/* Logo */
+.navbar .logo {
+    font-size: 24px;
+    color: #bb86fc;
+    font-weight: bold;
+}
+
+/* Nav Links */
+.navbar .nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+    color: #bb86fc;
+}
+
+/* Search Bar */
+.nav-search {
+    display: flex;
+    align-items: center;
+}
+
+.nav-search input[type="text"] {
+    padding: 8px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    width: 200px;
+    transition: 0.3s ease;
+}
+
+.nav-search button {
+    background: #bb86fc;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #fff;
+    transition: background 0.3s;
+}
+
+.nav-search button:hover {
+    background: #9e6bff;
+}
+
+/* Welcome Text */
+.navbar .welcome-text {
+    color: #ffffff;
+    margin-right: 20px;
+    font-size: 16px;
+}
+
+/* Ensure all navbar items are in a row */
+.navbar > div {
+    display: flex;
+    align-items: center;
+}
+
+/* Profile Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: transparent;
+    color: #ffffff;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropbtn i.fa-caret-down {
+    font-size: 12px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #2d2d3f;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+    z-index: 1000;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: #ffffff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+    font-size: 14px;
+}
+
+.dropdown-content a i {
+    font-size: 16px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.dropdown-content a:hover {
+    background-color: #444466;
+    color: #bb86fc;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+
+/* Section Title */
+.section-title {
+    text-align: center;
+    font-size: 32px;
+    color: #ffffff;
+    margin: 40px 0 20px;
+}
+
+/* Car Grid */
+/* Car Grid */
+.car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+    padding: 40px 80px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+    justify-content: center; /* Center the single card */
+}
+
+/* Car Card */
+.car-card {
+    background-color: #1e1e2f;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    max-width: 350px; /* Prevent stretching */
+    margin: auto; /* Center individual card */
+}
+
+
+.car-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(187, 134, 252, 0.3);
+}
+
+.car-card img.car-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.car-info {
+    padding: 15px;
+    color: #ffffff;
+}
+
+.car-info h2 {
+    margin: 10px 0 5px;
+    color: #bb86fc;
+    font-size: 20px;
+}
+
+.car-info p {
+    margin: 4px 0;
+    font-size: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+     .car-grid {
+            grid-template-columns: 1fr;
+            padding: 20px;
+        }
+
+    .nav-search input[type="text"] {
+        width: 120px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+
+.car-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(to right, #1f1c2c, #928dab);
+    padding: 80px 20px;
+    text-align: center;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #bb86fc;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.hero-section p {
+    font-size: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+/* Optional: subtle background animation */
+.hero-section::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.05), transparent 70%);
+    animation: moveBG 30s linear infinite;
+    z-index: 0;
+}
+
+@keyframes moveBG {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.hero-section * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Book Now Button */
+.book-now-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 30px;
+    font-size: 16px;
+    background-color: #bb86fc;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.book-now-btn:hover {
+    background-color: #9a6dff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.no-results {
+    text-align: center;
+    font-size: 18px;
+    color: #bbb;
+    margin-top: 40px;
+}
+
+/* Sort Form Styling */
+.dashboard-filters {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 60px 10px;
+}
+
+.sort-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.sort-form label {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.sort-form select {
+    background: #1a1a2e;
+    color: #bb86fc;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid #bb86fc;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.sort-form select:focus {
+    outline: none;
+    border-color: #ffffff;
+}
+
+.sort-form label i {
+    margin-right: 6px;
+    color: #bb86fc;
+}
+
+/* Filter and Sort Bar */
+.filter-sort-bar {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 30px auto 20px;
+    padding: 10px 20px;
+    background-color: #1e1e2f;
+    border-radius: 10px;
+    max-width: 1000px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.filter-sort-bar select,
+.filter-sort-bar input[type="text"] {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background-color: #2e2e40;
+    color: #fff;
+    font-size: 15px;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+.filter-sort-bar select:focus,
+.filter-sort-bar input[type="text"]:focus {
+    border-color: #bb86fc;
+}
+
+.filter-sort-bar button {
+    padding: 8px 16px;
+    background-color: #bb86fc;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.filter-sort-bar button:hover {
+    background-color: #9e6bff;
+}
+
+/* Responsive Grid Update */
+.car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Car Card Update */
+.car-card {
+    background-color: #2c2c3e;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 5px 20px rgba(187, 134, 252, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Makes it stretch evenly in grid */
+}
+
+
+.car-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(187, 134, 252, 0.2);
+}
+
+.car-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.car-card img.car-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+
+.car-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+    text-align: left;
+    color: #fff;
+}
+
+.car-info h2 {
+    font-size: 20px;
+    margin: 5px 0 10px;
+    color: #bb86fc;
+}
+
+.car-info p {
+    margin: 6px 0;
+    font-size: 15px;
+}
+
+.filter-sort-form {
+    max-width: 880px;
+    margin: 10px auto 20px;
+    padding: 12px 16px;
+    background: linear-gradient(to right, #1a1a2e, #2d2d44);
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.filter-sort-form form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.filter-sort-form label {
+    font-size: 13px;
+    color: #bb86fc;
+    font-weight: 500;
+    margin-bottom: 2px;
+    display: block;
+}
+
+.filter-sort-form select,
+.filter-sort-form input[type="text"] {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #3e3e5e;
+    background: #282838;
+    color: #f0f0f0;
+    font-size: 13px;
+    min-width: 140px;
+    transition: 0.3s ease;
+}
+
+.filter-sort-form select:focus,
+.filter-sort-form input[type="text"]:focus {
+    border-color: #bb86fc;
+    outline: none;
+    background-color: #32324a;
+}
+
+.filter-sort-form button {
+    padding: 8px 16px;
+    background: linear-gradient(to right, #bb86fc, #a370f7);
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.filter-sort-form button:hover {
+    background: linear-gradient(to right, #a370f7, #bb86fc);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .filter-sort-form form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-sort-form select,
+    .filter-sort-form input[type="text"],
+    .filter-sort-form button {
+        min-width: 100%;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.navbar .welcome-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e6dfff;
+    padding: 12px 24px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2),
+                0 0 10px rgba(168, 85, 247, 0.5),
+                0 0 20px rgba(168, 85, 247, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.navbar .welcome-text:hover {
+    transform: translateY(-2px);
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.2),
+                0 0 12px rgba(168, 85, 247, 0.8),
+                0 0 24px rgba(168, 85, 247, 0.5);
+}
+
+/* Modal styles */
+
+.modal {
+   display: none;
+   position: fixed;
+   z-index: 9999;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   overflow: auto;
+   background-color: rgba(0, 0, 0, 0.8); /* Darker backdrop */
+   padding-top: 60px;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal-content {
+   background: linear-gradient(145deg, #1c1c1c, #2b2b2b); /* black gradient */
+   color: #f1f1f1;
+   margin: 5% auto;
+   padding: 25px 30px;
+   border: 1px solid #6a0dad;
+   border-radius: 12px;
+   width: 80%;
+   max-width: 500px;
+   box-shadow: 0 8px 16px rgba(106, 13, 173, 0.3);
+   position: relative;
+   animation: fadeIn 0.4s ease-in-out;
+}
+
+.close {
+   color: #b67aff;
+   float: right;
+   font-size: 28px;
+   font-weight: bold;
+   transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+   color: #ffffff;
+   text-decoration: none;
+   cursor: pointer;
+}
+
+.unseen-notifications {
+   font-weight: bold;
+   background-color: #ff2e63;
+   color: white;
+   padding: 3px 8px;
+   font-size: 12px;
+   border-radius: 50%;
+   margin-left: 5px;
+   animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+   0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 46, 99, 0.7);
+   }
+   70% {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 10px rgba(255, 46, 99, 0);
+   }
+   100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 46, 99, 0);
+   }
+}
+
+@keyframes fadeIn {
+   from { opacity: 0; transform: scale(0.9); }
+   to { opacity: 1; transform: scale(1); }
+}
+
+.btn-confirm {
+   background-color: #6a0dad;
+   color: white;
+   border: none;
+   padding: 8px 16px;
+   margin-top: 10px;
+   cursor: pointer;
+   border-radius: 8px;
+   font-size: 14px;
+   transition: background-color 0.3s ease;
+}
+
+.btn-confirm:hover {
+   background-color: #8e44ec;
+}
+
+
+.red-dot {
+    height: 10px;
+    width: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 5px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+
+

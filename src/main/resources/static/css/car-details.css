@@ -1,0 +1,296 @@
+/* General Body Styling */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(circle at top left, #1b1b2e, #0f0f1b);
+    color: white;
+    overflow-x: hidden;
+}
+
+.navbar {
+    background: rgba(30, 30, 47, 0.95);
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(187, 134, 252, 0.2);
+    box-shadow: 0 4px 20px rgba(187, 134, 252, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.navbar .logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #bb86fc;
+    letter-spacing: 1px;
+}
+
+.navbar .nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    font-size: 16px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.navbar .nav-links a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #bb86fc;
+    transition: width 0.3s ease-in-out;
+}
+
+.navbar .nav-links a:hover::after {
+    width: 100%;
+}
+
+.navbar .nav-links a:hover {
+    color: #bb86fc;
+}
+
+/* ====================== */
+/* ===== CAR DETAILS ==== */
+/* ====================== */
+
+.car-detail-container {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 40px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.car-detail-card {
+    background: rgba(44, 44, 62, 0.85);
+    backdrop-filter: blur(16px);
+    border-radius: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: 0 30px 60px rgba(187, 134, 252, 0.1);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.3s ease;
+}
+
+/* Animated Border Glow */
+.car-detail-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, rgba(187, 134, 252, 0.2), rgba(187, 134, 252, 0.05));
+    z-index: -1;
+    border-radius: 22px;
+    filter: blur(10px);
+}
+
+/* Image Section */
+.car-image-section {
+    flex: 1;
+    min-width: 400px;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.02);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.car-detail-img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 16px;
+    transition: transform 0.6s ease, box-shadow 0.4s ease;
+}
+
+.car-detail-img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 30px rgba(187, 134, 252, 0.6);
+    cursor: zoom-in;
+}
+
+/* Info Section */
+.car-info-section {
+    flex: 1;
+    padding: 40px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.car-info-section h1 {
+    color: #bb86fc;
+    font-size: 36px;
+    margin-bottom: 25px;
+}
+
+.car-info-section p {
+    font-size: 17px;
+    margin: 10px 0;
+    color: #e1e1e1;
+    line-height: 1.6;
+}
+
+.car-desc {
+    margin-top: 15px;
+    font-style: italic;
+    color: #cfcfcf;
+}
+
+/* Book Button */
+.book-btn {
+    margin-top: 30px;
+    padding: 14px 30px;
+    background: linear-gradient(135deg, #bb86fc, #9d6bfb);
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 8px 30px rgba(187, 134, 252, 0.3);
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.book-btn:hover {
+    background: linear-gradient(135deg, #a96ffb, #8f5af7);
+    transform: translateY(-3px);
+}
+
+.booked-msg {
+    margin-top: 25px;
+    font-weight: bold;
+    color: #ff5c5c;
+}
+
+.car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Car Card Update */
+.car-card {
+    background-color: #2c2c3e;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 5px 20px rgba(187, 134, 252, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Makes it stretch evenly in grid */
+}
+
+
+.car-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(187, 134, 252, 0.2);
+}
+
+.car-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.car-card img.car-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+
+.car-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+    text-align: left;
+    color: #fff;
+}
+
+.car-info h2 {
+    font-size: 20px;
+    margin: 5px 0 10px;
+    color: #bb86fc;
+}
+
+.car-info p {
+    margin: 6px 0;
+    font-size: 15px;
+}
+
+.similar-cars-section {
+    margin: 60px auto;
+    max-width: 1400px;
+    padding: 0 60px;
+}
+
+.section-heading {
+    font-size: 26px;
+    color: #bb86fc;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Optional Ribbon Tag */
+.ribbon {
+    position: absolute;
+    top: 12px;
+    left: -12px;
+    background: linear-gradient(135deg, #bb86fc, #9d6bfb);
+    color: white;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    transform: rotate(-45deg);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    z-index: 10;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.car-card {
+    position: relative;
+}
+
+.navbar .welcome-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e6dfff;
+    padding: 12px 24px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.2),
+                0 0 10px rgba(168, 85, 247, 0.5),
+                0 0 20px rgba(168, 85, 247, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.navbar .welcome-text:hover {
+    transform: translateY(-2px);
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.2),
+                0 0 12px rgba(168, 85, 247, 0.8),
+                0 0 24px rgba(168, 85, 247, 0.5);
+}

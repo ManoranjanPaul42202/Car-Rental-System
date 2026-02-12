@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Car</title>
+    <link rel="stylesheet" href="/css/add-car.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i> Car Rental
+    </div>
+    <div class="nav-links">
+        <a th:href="@{/admin/dashboard}">Home</a>
+        <a th:href="@{/admin/dashboard}">Bookings</a>
+        <a th:href="@{/admin/dashboard/locations}">Add Locations</a>
+        <a th:href="@{/login?logout}">Log Out</a>
+    </div>
+</nav>
+<h1>Add New Car</h1>
+
+<form th:action="@{/admin/dashboard/cars/save}" th:object="${car}" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="name">Car Name:</label>
+        <input type="text" id="name" th:field="*{name}" placeholder="Car Name" required />
+    </div>
+
+    <div>
+        <label for="carType">Car Type:</label>
+        <input type="text" id="carType" th:field="*{carType}" placeholder="Car Type" required />
+    </div>
+
+    <div>
+        <label for="modelNumber">Model Number:</label>
+        <input type="text" id="modelNumber" th:field="*{modelNumber}" placeholder="Model Number" required />
+    </div>
+
+    <div>
+        <label for="yearOfProduction">Year of Production:</label>
+        <input type="number" id="yearOfProduction" th:field="*{yearOfProduction}" placeholder="Year of Production" required />
+    </div>
+
+    <div>
+        <label for="registrationNumber">Registration Number:</label>
+        <input type="text" id="registrationNumber" th:field="*{registrationNumber}" placeholder="Registration Number" required />
+    </div>
+
+    <div>
+        <label for="seatingCapacity">Seating Capacity:</label>
+        <input type="number" id="seatingCapacity" th:field="*{seatingCapacity}" placeholder="Seating Capacity" required />
+    </div>
+
+    <div>
+        <label for="rentalPricePerDay">Rental Price Per Day:</label>
+        <input type="number" id="rentalPricePerDay" th:field="*{rentalPricePerDay}" placeholder="Rental Price Per Day" required />
+    </div>
+
+    <div>
+        <label for="availabilityStatus">Availability Status:</label>
+        <input type="checkbox" id="availabilityStatus" th:field="*{availabilityStatus}" />
+    </div>
+
+    <div>
+        <label for="image">Car Image:</label>
+        <input type="text" id="image" th:field="*{image}" />
+    </div>
+
+    <div>
+        <label for="engineType">Engine Type:</label>
+        <input type="text" id="engineType" th:field="*{engineType}" placeholder="Engine Type" required />
+    </div>
+
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" th:field="*{description}" placeholder="Car Description"></textarea>
+    </div>
+
+    <div>
+        <label for="location">Location:</label>
+        <select id="location" th:field="*{location.locationId}">
+            <option th:each="location : ${locations}" th:value="${location.locationId}" th:text="${location.city}+', '+${location.state}"></option>
+        </select>
+    </div>
+
+    <button type="submit">Add Car</button>
+</form>
+
+<!-- Car Grid -->
+<div id="car-section" class="car-grid">
+    <div th:each="car : ${carList}" class="car-card">
+        <a th:href="@{'/dashboard/cars/' + ${car.carId}}" method="get">
+            <img th:src="@{'/images/' + ${car.image}}" alt="Car Image" class="car-img" />
+            <div class="car-info">
+                <h2 th:text="${car.name}">Car Name</h2>
+                <p><strong>Seats:</strong> <span th:text="${car.seatingCapacity}">4</span></p>
+                <p><strong>₹</strong><span th:text="${car.rentalPricePerDay}">1500</span>/day</p>
+                <div class="car-available" th:if="${car.availabilityStatus==false}">
+                    <form th:action="@{/admin/dashboard/available/{carId}(carId=${car.carId})}">
+                        <button type="submit">Make Available</button>
+                    </form>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div th:if="${#lists.isEmpty(carList)}" class="no-results">
+        <p>No cars found matching your search.</p>
+    </div>
+</div>
+
+</body>
+</html>

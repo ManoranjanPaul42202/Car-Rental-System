@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your Bookings</title>
+    <link rel="stylesheet" th:href="@{/css/booking-list.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i> Car Rental
+    </div>
+    <div class="nav-links">
+        <a th:href="@{/dashboard}">Home</a>
+        <a th:href="@{/dashboard/book/list}">Bookings</a>
+        <a th:href="@{/login?logout}">Log Out</a>
+    </div>
+</nav>
+
+<!-- Page Heading -->
+<h2>Your Bookings</h2>
+
+<!-- Success Message -->
+<div th:if="${successMessage}">
+    <h4><strong>Booking Status:</strong> <span th:text="${successMessage}">Success Message</span></h4>
+</div>
+
+<!-- Bookings List -->
+<div class="bookings-container" th:if="${Bookings != null and !Bookings.isEmpty()}">
+    <div class="booking-card" th:each="booking : ${Bookings}">
+        <div class="card-header">
+            <span class="status">
+                <i class="fa-solid fa-circle-info"></i>
+                <span th:text="${booking.bookingStatus}">Pending</span>
+            </span>
+        </div>
+
+        <div class="card-body">
+            <div class="car-image">
+                <img th:src="@{'/images/' + ${booking.car.image}}" alt="Car Image" />
+            </div>
+
+            <div class="booking-info">
+                <h3>
+                    <i class="fa-solid fa-car"></i>
+                    <a class="car-name" th:href="@{/dashboard/cars/{id}(id=${booking.car.carId})}"
+                       th:text="${booking.car.name}">Car Name</a>
+                </h3>
+                <p><i class="fa-regular fa-calendar-days"></i> <strong>From:</strong>
+                    <span th:text="${#temporals.format(booking.startDate, 'dd-MM-yyyy')}"></span>
+                </p>
+                <p><i class="fa-regular fa-calendar-check"></i> <strong>To:</strong>
+                    <span th:text="${#temporals.format(booking.endDate, 'dd-MM-yyyy')}"></span>
+                </p>
+                <p><i class="fa-solid fa-map-location-dot"></i> <strong>Pickup:</strong>
+                    <span th:text="${booking.pickupLocation.city}">City</span>
+                </p>
+                <p><i class="fa-solid fa-map-pin"></i> <strong>Drop-off:</strong>
+                    <span th:text="${booking.dropoffLocation.city}">City</span>
+                </p>
+                <p><i class="fa-solid fa-indian-rupee-sign"></i> <strong>Total Rent:</strong> ₹
+                    <span th:text="${booking.totalPrice}">0</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="card-actions">
+            <div th:if="${booking.bookingStatus.toString() == 'PENDING'}">
+                <a th:href="@{/dashboard/book/update/{bookingId}(bookingId=${booking.bookingId})}">
+                    <button class="update"><i class="fa-solid fa-pen-to-square"></i> Update</button>
+                </a>
+            </div>
+            <div th:if="${booking.rental == false}">
+                <form th:action="@{/dashboard/book/delete/{bookingId}(bookingId=${booking.bookingId})}"
+                      onsubmit="return confirm('Are you sure you want to cancel this booking?');">
+                    <button type="submit" class="delete"><i class="fa-solid fa-ban"></i> Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- No Bookings Message -->
+<div class="no-bookings" th:if="${Bookings == null or Bookings.isEmpty()}">
+    <p><i class="fa-solid fa-box-open"></i> You have no bookings yet.</p>
+</div>
+
+</body>
+</html>

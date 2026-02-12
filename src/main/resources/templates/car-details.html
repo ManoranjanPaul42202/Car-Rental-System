@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|${car.name} Details|">Car Details</title>
+    <link rel="stylesheet" th:href="@{/css/car-details.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i> Car Rental
+    </div>
+    <div class="nav-links">
+        <a th:href="@{/dashboard}">Home</a>
+        <a th:href="@{/dashboard/book/list}">Bookings</a>
+        <a th:href="@{/login?logout}">Log Out</a>
+    </div>
+</nav>
+
+<!-- Car Detail Section -->
+<div class="car-detail-container" th:if="${car != null}">
+    <div class="car-detail-card">
+
+        <!-- Car Image Section -->
+        <div class="car-image-section">
+            <img id="carImg" th:src="@{'/images/' + ${car.image}}" alt="Car Image" class="car-detail-img" />
+        </div>
+
+        <div class="car-info-section">
+            <h1 th:text="${car.name}">Car Name</h1>
+
+            <!-- Car Information -->
+            <p><strong>Model Number:</strong> <span th:text="${car.modelNumber}">S</span></p>
+            <p><strong>Seating Capacity:</strong> <span th:text="${car.seatingCapacity}">4</span></p>
+            <p><strong>Year:</strong> <span th:text="${car.yearOfProduction}">2022</span></p>
+            <p><strong>Engine Type:</strong> <span th:text="${car.engineType}">Petrol</span></p>
+            <p><strong>State:</strong> <span th:text="${car.location.state}">Maharashtra</span></p>
+            <p><strong>City:</strong> <span th:text="${car.location.city}">Mumbai</span></p>
+            <p><strong>Rental Price/Day:</strong> ₹<span th:text="${car.rentalPricePerDay}">1500</span></p>
+
+            <!-- Description -->
+            <p><strong>Description:</strong></p>
+            <p th:text="${car.description}" class="car-desc"></p>
+            <br>
+
+            <!-- Book Button (if available) -->
+            <div th:if="${car.availabilityStatus == true}">
+                <a th:href="@{'/dashboard/book/' + ${car.carId}}" class="book-btn">Book Now</a>
+            </div>
+
+            <!-- Message if car is booked -->
+            <div th:unless="${car.availabilityStatus == true}">
+                <p class="booked-msg">Car Has Already been booked...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Similar Cars Section -->
+<h2 class="section-heading"><i class="fa-solid fa-car-side"></i> View Similar Cars</h2>
+<section class="similar-cars-section" th:if="${not #lists.isEmpty(similarCars)}">
+    <div id="car-section" class="car-grid">
+        <div th:each="car : ${similarCars}" class="car-card">
+            <!-- Optional Ribbon -->
+            <div class="ribbon" th:text="${car.carType}">Luxury</div>
+
+            <a th:href="@{'/dashboard/cars/' + ${car.carId}}" method="get">
+                <img th:src="@{'/images/' + ${car.image}}" alt="car Image" class="car-img"/>
+                <div class="car-info">
+                    <h2 th:text="${car.name}">Car Name</h2>
+                    <p><strong>Seats:</strong> <span th:text="${car.seatingCapacity}">2</span></p>
+                    <p><strong>₹</strong> <span th:text="${car.rentalPricePerDay}">15000</span>/day</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- No Similar Cars -->
+<div th:if="${#lists.isEmpty(similarCars)}" class="no-results">
+    <p>No similar cars found.</p>
+</div>
+
+
+</body>
+</html>

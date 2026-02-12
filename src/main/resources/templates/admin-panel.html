@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Bookings</title>
+    <link rel="stylesheet" th:href="@{/css/admin-panel.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i> Car Rental
+    </div>
+    <div class="nav-links">
+        <a th:href="@{/admin/dashboard}">Home</a>
+        <a th:href="@{/admin/dashboard}">Bookings</a>
+        <a th:href="@{/admin/dashboard/locations}">Add Locations</a>
+        <a th:href="@{/admin/dashboard/cars}">Add Cars</a>
+        <a th:href="@{/login?logout}">Log Out</a>
+    </div>
+</nav>
+
+<h2> Booking Management </h2>
+<div th:if="${successMessage}">
+    <h4><strong>Booking Status:</strong><span th:text="${successMessage}">Msg</span></h4>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Car</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Pickup</th>
+        <th>Drop-off</th>
+        <th>Total Rent</th>
+        <th>Status</th>
+        <th>Rental</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="booking : ${Bookings}">
+        <td>
+            <!-- Link to the car details page -->
+            <a th:href="@{/dashboard/cars/{carId}(carId=${booking.car.carId})}" th:text="${booking.car != null ? booking.car.name : 'N/A'}"></a>
+        </td>
+        <td>
+            <span th:text="${#temporals.format(booking.startDate, 'dd-MM-yyyy')}"></span>
+        </td>
+        <td>
+            <span th:text="${#temporals.format(booking.endDate, 'dd-MM-yyyy')}"></span>
+        </td>
+        <td>
+            <span th:text="${booking.pickupLocation != null ? booking.pickupLocation.city : 'N/A'}"></span>
+        </td>
+        <td>
+            <span th:text="${booking.dropoffLocation != null ? booking.dropoffLocation.city : 'N/A'}"></span>
+        </td>
+        <td>
+            <span th:text="${booking.totalPrice != null ? booking.totalPrice : 'N/A'}"></span>
+        </td>
+        <td>
+            <span th:text="${booking.bookingStatus}"></span>
+        </td>
+        <td>
+            <span th:text="${booking.rental}"></span>
+        </td>
+        <td>
+            <div class="button-container" th:if="${booking.bookingStatus.toString() == 'PENDING'}">
+                <!-- Update Button -->
+                <a th:href="@{/admin/dashboard/book/update/{bookingId}(bookingId=${booking.bookingId})}">
+                    <button class="update">Approve</button>
+                </a>
+
+                <!-- Delete Button -->
+                <form th:action="@{/admin/dashboard/book/delete/{bookingId}(bookingId=${booking.bookingId})}" onsubmit="return confirm('Are you sure you want to reject this booking?');">
+                    <button type="submit" class="delete">Reject</button>
+                </form>
+            </div>
+            <div class="button-container" th:if="${booking.bookingStatus.toString == 'REJECTED'}">
+                <!-- Update Button -->
+                <a th:href="@{/admin/dashboard/book/update/{bookingId}(bookingId=${booking.bookingId})}">
+                    <button class="update">Approve</button>
+                </a>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

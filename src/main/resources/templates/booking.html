@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/booking-form.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i> Car Rental
+    </div>
+    <div class="nav-links">
+        <a th:href="@{/dashboard}">Home</a>
+        <a th:href="@{/dashboard/book/list}">Bookings</a>
+        <a th:href="@{/login?logout}">Log Out</a>
+    </div>
+</nav>
+
+<!-- Car Detail Section -->
+<div class="car-detail-container" th:if="${car != null}">
+    <div class="car-booking-form">
+
+        <!-- Car Image Section -->
+        <div class="car-image-section">
+            <img id="carImg" th:src="@{'/images/' + ${car.image}}" alt="Car Image" class="car-detail-img" />
+        </div>
+
+        <div class="car-info-section">
+            <form id="bookingForm" th:action="@{'/dashboard/book/' + ${car.carId}}" method="POST" th:object="${booking}">
+                <div class="booking-form">
+                    <!-- Hidden Booking ID and Car Reference -->
+                    <input type="hidden" th:field="*{bookingId}" />
+                    <input type="hidden" th:value="${car.carId}" th:field="*{car.carId}" />
+
+                    <!-- User Info -->
+                    <p><strong>Billing Name: </strong>
+                        <span th:text="${username}"></span>
+                        <input type="hidden" th:field="*{user.username}" th:value="${username}" />
+                    </p>
+
+                    <!-- Car Info -->
+                    <p><strong>Car Name: </strong><span th:text="${car.name}"></span></p>
+                    <p><strong>Engine Type: </strong><span th:text="${car.engineType}"></span></p>
+                    <p><strong>Seating Capacity: </strong><span th:text="${car.seatingCapacity}"></span></p>
+
+                    <!-- Inside .booking-form div -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><strong>Pickup Location:</strong></label>
+                            <input type="text" th:value="${car.location.city}" readonly />
+                            <input type="hidden" th:field="*{pickupLocation}" th:value="${car.location}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dropoffLocation"><strong>Drop-off Location:</strong></label>
+                            <select id="dropoffLocation" th:field="*{dropoffLocation.locationId}">
+                                <option value="" disabled selected>Select Location</option>
+                                <option th:each="loc : ${locationList}"
+                                        th:value="${loc.locationId}"
+                                        th:text="${loc.city + ', ' + loc.state}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Start Date -->
+                        <div class="form-group">
+                            <label for="startDate"><strong>Start Date:</strong></label>
+                            <input type="date" id="startDate" th:field="*{startDate}" required
+                                   min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+                            <p id="startDateError" class="error-msg"></p>
+                        </div>
+
+                        <!-- End Date -->
+                        <div class="form-group">
+                            <label for="endDate"><strong>End Date:</strong></label>
+                            <input type="date" id="endDate" th:field="*{endDate}" required />
+                            <p id="endDateError" class="error-msg"></p>
+                        </div>
+                    </div>
+
+                    <!-- Booking Duration & Price -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><strong>Number of Days:</strong>
+                                <input type="text" id="numDays" value="0" readonly />
+                            </label>
+
+                        </div>
+                        <div class="form-group">
+                            <label><strong>Total Rent (₹):</strong>
+                                <input type="text" id="totalRent" th:value="*{totalPrice}" readonly />
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" id="totalPrice" th:field="*{totalPrice}" />
+
+
+                    <!-- Booking Status Hidden -->
+                    <input type="hidden" th:field="*{bookingStatus}" th:value="'Pending'" />
+
+                    <!-- Submit Button -->
+                    <div class="button-wrapper">
+                        <button type="submit">Confirm Booking</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- View Similar Cars Section -->
+<h2 class="section-heading"><i class="fa-solid fa-car-side"></i> View Similar Cars</h2>
+<section class="similar-cars-section" th:if="${not #lists.isEmpty(similarCars)}">
+
+    <div id="car-section" class="car-grid">
+        <div th:each="car : ${similarCars}" class="car-card">
+            <!-- Optional Ribbon -->
+            <div class="ribbon" th:text="${car.carType}">Luxury</div>
+
+            <a th:href="@{'/dashboard/cars/' + ${car.carId}}" method="get">
+                <img th:src="@{'/images/' + ${car.image}}" alt="car Image" class="car-img"/>
+                <div class="car-info">
+                    <h2 th:text="${car.name}">Car Name</h2>
+                    <p><strong>Seats:</strong> <span th:text="${car.seatingCapacity}">2</span></p>
+                    <p><strong>₹</strong> <span th:text="${car.rentalPricePerDay}">15000</span>/day</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- No Similar Cars -->
+<div th:if="${#lists.isEmpty(similarCars)}" class="no-results">
+    <p>No similar cars found.</p>
+</div>
+
+
+<script th:inline="javascript">
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    const numDaysInput = document.getElementById('numDays'); // changed variable name to reflect input
+    const totalRentInput = document.getElementById('totalRent'); // changed variable name to reflect input
+    const totalPriceInput = document.getElementById('totalPrice');
+
+    const startDateError = document.getElementById('startDateError');
+    const endDateError = document.getElementById('endDateError');
+
+    const rentPerDay = [[${car.rentalPricePerDay}]];
+
+    function calculateRent() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const start = new Date(startDateInput.value);
+        const end = new Date(endDateInput.value);
+
+        let valid = true;
+
+        // Clear errors
+        startDateError.textContent = '';
+        endDateError.textContent = '';
+
+        // Validate Start Date
+        if (!isNaN(start) && start < today ) {
+            startDateError.textContent = "Start date must be today or later.";
+            startDateInput.value = '';
+            valid = false;
+        }
+
+        if(!isNaN(start) && ((start-today)/(1000*60*60*24))+1 > 30){
+            startDateError.textContent = "Booking can only be made 30 days prior.";
+            startDateInput.value = '';
+            valid = false;
+        }
+
+        // Validate End Date
+        if (!isNaN(start) && !isNaN(end) && end < start) {
+            endDateError.textContent = "End date must be after or equal to start date.";
+            endDateInput.value = '';
+            valid = false;
+        }
+
+        // Show rent if valid
+        if (valid && !isNaN(start) && !isNaN(end)) {
+            const diffTime = end - start;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+            const total = diffDays * rentPerDay;
+            numDaysInput.value = diffDays;
+            totalRentInput.value = total;
+            totalPriceInput.value = total;
+        } else {
+            numDaysInput.value = '0';
+            totalRentInput.value = '0';
+            totalPriceInput.value = '';
+        }
+    }
+
+    startDateInput.addEventListener('change', calculateRent);
+    endDateInput.addEventListener('change', calculateRent);
+</script>
+
+
+
+</body>
+</html>

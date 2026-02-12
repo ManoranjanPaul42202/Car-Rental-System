@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - Car Rental System</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i> CarRental
+    </div>
+    <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#" th:href="@{/register}">Sign Up</a>
+        <a href="#login-form">Login</a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <h1>Welcome to CarRental</h1>
+    <p>Rent your dream car with ease and confidence. Explore our range of vehicles from economy to luxury.</p>
+</section>
+
+
+<!-- Car Slider Section -->
+<section class="slider-section">
+    <h2 class="slider-heading">Explore Our Fleet</h2>
+    <div class="slider-wrapper">
+        <div class="slider" id="carSlider">
+            <img src="/images/car1.jpg" alt="Car 1" />
+            <img src="/images/car2.jpg" alt="Car 2" />
+            <img src="/images/car3.webp" alt="Car 3" />
+            <img src="/images/car4.jpg" alt="Car 4" />
+            <img src="/images/car5.jpg" alt="Car 5" />
+        </div>
+    </div>
+</section>
+
+<!-- Info Section -->
+<section class="info-section">
+    <div class="info-box">
+        <i class="fa-solid fa-dollar-sign"></i>
+        <h3>Affordable Prices</h3>
+        <p>Choose from a wide range of vehicles at competitive rates to fit any budget.</p>
+    </div>
+    <div class="info-box">
+        <i class="fa-solid fa-calendar-check"></i>
+        <h3>Easy Booking</h3>
+        <p>Quick and seamless booking process so you can hit the road faster.</p>
+    </div>
+    <div class="info-box">
+        <i class="fa-solid fa-headset"></i>
+        <h3>24/7 Support</h3>
+        <p>We’re always here to help. Contact us anytime for assistance.</p>
+    </div>
+</section>
+
+<!-- Drivers Available Section
+<section class="drivers-section">
+    <h2 class="section-heading">Drivers Available</h2>
+    <div class="info-container">
+        <div class="info-box">
+            <i class="fa-solid fa-id-card"></i>
+            <h3>Verified Drivers</h3>
+            <p>All our drivers are verified and professionally trained for safe travel.</p>
+        </div>
+        <div class="info-box">
+            <i class="fa-solid fa-user-shield"></i>
+            <h3>24/7 Driver Support</h3>
+            <p>Drivers available around the clock to meet your travel needs anytime.</p>
+        </div>
+        <div class="info-box">
+            <i class="fa-solid fa-car-on"></i>
+            <h3>Experienced Chauffeurs</h3>
+            <p>Book our expert drivers for long or luxury rides with maximum comfort.</p>
+        </div>
+    </div>
+</section>
+-->
+
+<!-- Login Form -->
+<div id="login-form" class="login-container animate-fade">
+    <div class="logo-section">
+        <i class="fa-solid fa-car-side"></i>
+        <h1>CarRental</h1>
+    </div>
+
+    <h2>Login</h2>
+
+    <form th:action="@{/login}" method="post">
+        <div class="input-group">
+            <label for="username"><i class="fa-solid fa-user"></i> Username</label>
+            <input type="text" id="username" name="username" required />
+        </div>
+
+        <div class="input-group">
+            <label for="password"><i class="fas fa-lock"></i> Password</label>
+            <div class="password-wrapper-outside">
+                <input type="password" id="password" name="password" required/>
+                <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+        </div>
+
+        <div class="button-wrapper">
+            <button type="submit">Login <i class="fa-solid fa-arrow-right-to-bracket"></i></button>
+        </div>
+
+        <div th:if="${param.error}" class="error-msg">
+            Invalid username or password.
+        </div>
+
+        <div th:if="${param.logout}" class="logout-msg">
+            You have been logged out.
+        </div>
+    </form>
+</div>
+
+
+<br>
+<br>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <i class="fa-solid fa-car-side"></i>
+            <span>CarRental</span>
+        </div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-info">
+            <p>&copy; 2025 CarRental. All rights reserved.</p>
+            <p>Created by <strong>Manoranjan Paul</strong> | Vidyalankar Institute of Technology</p>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Auto Slider Script -->
+<script>
+    const slider = document.getElementById('carSlider');
+    let scrollAmount = 0;
+    const scrollStep = 1;
+    const scrollMax = slider.scrollWidth - slider.clientWidth;
+
+    function autoSlide() {
+        scrollAmount += scrollStep;
+        if (scrollAmount >= scrollMax) {
+            scrollAmount = 0;
+        }
+        slider.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+    }
+    setInterval(autoSlide, 35);
+
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordInput = document.getElementById("password");
+
+  togglePassword.addEventListener("click", function () {
+    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+
+    // Toggle the icon (optional: fa-eye-slash for "hide" icon)
+    this.classList.toggle("fa-eye");
+    this.classList.toggle("fa-eye-slash");
+  });
+
+</script>
+
+</body>
+</html>

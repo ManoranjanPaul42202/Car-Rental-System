@@ -1,0 +1,228 @@
+/* Navbar Styling */
+.navbar {
+    background: rgba(30, 30, 47, 0.95);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(187, 134, 252, 0.2);
+    box-shadow: 0 4px 20px rgba(187, 134, 252, 0.05);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+/* Logo Styling */
+.navbar .logo {
+    font-size: 26px;
+    font-weight: bold;
+    color: #bb86fc;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+/* Nav Links Container */
+.navbar .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    white-space: nowrap;
+}
+
+/* Individual Nav Link */
+.navbar .nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Hover underline effect */
+.navbar .nav-links a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #bb86fc;
+    transition: width 0.3s ease-in-out;
+}
+
+.navbar .nav-links a:hover::after {
+    width: 100%;
+}
+
+.navbar .nav-links a:hover {
+    color: #bb86fc;
+}
+
+/* Responsive Behavior */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 30px;
+    }
+
+    .navbar .nav-links {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .navbar .nav-links a {
+        margin: 10px 0;
+    }
+}
+
+
+
+/* Body Background & Padding */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f0f1b 0%, #1b1b2e 100%);
+    color: #eaeaea;
+    padding: 120px 60px 50px; /* Extra top padding for fixed navbar */
+}
+
+/* Stylish Table */
+table {
+    width: 100%;                /* Increase the width of the table */
+    margin: 0 auto;            /* Center the table horizontally */
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    background: rgba(40, 40, 60, 0.7);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    table-layout: fixed;       /* Ensures content is spread evenly across the table */
+}
+
+/* Table Head */
+thead {
+    background: rgba(90, 70, 130, 0.9);
+    color: #ffffff;
+}
+
+th {
+    padding: 18px 20px;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
+/* Table Body */
+tbody tr:nth-child(even) {
+    background-color: rgba(34, 34, 50, 0.5);
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgba(27, 27, 39, 0.5);
+}
+
+tbody tr:hover {
+    background-color: rgba(88, 70, 125, 0.3);
+}
+
+/* Table Cells */
+td {
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #e0e0e0;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+/* Car Details Link */
+a {
+    color: #bb86fc;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #d3b3ff;
+    text-decoration: underline;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start; /* or center if you prefer */
+    align-items: center;
+    gap: 10px;
+}
+
+/* Buttons */
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Update Button */
+button.update {
+    background: linear-gradient(135deg, #bb86fc, #a570d1);
+    color: white;
+    box-shadow: 0 4px 10px rgba(187, 134, 252, 0.3);
+}
+
+button.update:hover {
+    background: linear-gradient(135deg, #a570d1, #bb86fc);
+    transform: translateY(-2px);
+}
+
+/* Delete Button */
+button.delete {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+    box-shadow: 0 4px 10px rgba(244, 67, 54, 0.3);
+}
+
+button.delete:hover {
+    background: linear-gradient(135deg, #d32f2f, #f44336);
+    transform: translateY(-2px);
+}
+
+.button-container form {
+    margin: 0; /* Remove form margin to avoid spacing issues */
+}
+
+/* Ensure button container stays within table cell */
+td .button-container {
+    display: flex;             /* Use flexbox for alignment */
+    justify-content: flex-start; /* Align buttons to the start */
+    align-items: center;       /* Vertically center the buttons */
+    gap: 10px;                 /* Space between buttons */
+    flex-wrap: nowrap;         /* Prevent wrapping */
+}
+
+/* Keep buttons responsive and prevent overflow */
+.button-container button,
+.button-container form button {
+    max-width: 100%;           /* Ensure buttons do not overflow */
+    white-space: nowrap;       /* Prevent text inside buttons from wrapping */
+    flex-shrink: 0;            /* Prevent buttons from shrinking */
+}
+
+.navbar {
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
