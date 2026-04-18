@@ -8,31 +8,25 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.io.IOException;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 import java.time.Duration;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SeleniumTest {
 
-    private Process process;
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // 🔹 Start Spring Boot App (like setup_server)
-    // @BeforeAll
-    // public void startServer() throws IOException, InterruptedException {
-    //     process = new ProcessBuilder("java", "-jar", "target/car-0.0.1-SNAPSHOT.jar")
-    //             .start();
-
-    //     Thread.sleep(10000); // wait for app to start
-    // }
-
-    // 🔹 Setup driver (like pytest fixture)
+    // 🔹 Setup driver (before each test)
     @BeforeEach
     public void setupDriver() {
 
+        // Automatically download & setup ChromeDriver
+        WebDriverManager.chromedriver().setup();
+
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
+        options.addArguments("--headless=new"); // Required for Jenkins
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
@@ -71,7 +65,7 @@ public class SeleniumTest {
 
         driver.findElement(By.tagName("button")).click();
 
-        // Wait for error message (adjust class if needed)
+        // Wait for error message
         String errorText = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.className("alert"))).getText();
 
@@ -81,12 +75,8 @@ public class SeleniumTest {
     // 🔹 Cleanup driver
     @AfterEach
     public void tearDown() {
-        driver.quit();
-    }
-
-    // 🔹 Stop server
-    @AfterAll
-    public void stopServer() {
-        process.destroy();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
