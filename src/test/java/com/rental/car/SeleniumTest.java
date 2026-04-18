@@ -56,7 +56,7 @@ public class SeleniumTest {
     @Test
     public void testInvalidLogin() {
 
-        driver.get("http://localhost:8081/login");
+        driver.get("http://localhost:8080/login");
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
