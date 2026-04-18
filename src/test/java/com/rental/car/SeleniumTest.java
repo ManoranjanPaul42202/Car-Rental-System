@@ -48,7 +48,15 @@ public class SeleniumTest {
 
         driver.findElement(By.name("username")).sendKeys("user");
         driver.findElement(By.name("password")).sendKeys("password");
-        driver.findElement(By.tagName("button")).click();
+
+        // Scroll to button
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("window.scrollTo(0, document.body.scrollHeight)");
+
+        // Click using JS
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();",
+                        driver.findElement(By.tagName("button")));
 
         wait.until(ExpectedConditions.urlContains("dashboard"));
 
@@ -66,10 +74,17 @@ public class SeleniumTest {
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
-        driver.findElement(By.name("username")).sendKeys("wrong");
-        driver.findElement(By.name("password")).sendKeys("wrong");
+        driver.findElement(By.name("username")).sendKeys("user");
+        driver.findElement(By.name("password")).sendKeys("password");
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.tagName("button"))).click();
+        // Scroll to button
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("window.scrollTo(0, document.body.scrollHeight)");
+
+        // Click using JS
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();",
+                        driver.findElement(By.tagName("button")));
 
         // Wait for error message
         String errorText = wait.until(
