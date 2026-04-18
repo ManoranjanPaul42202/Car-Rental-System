@@ -39,24 +39,14 @@ public class SeleniumTest {
     @Test
     public void testValidLogin() {
 
-        wait.until(driver -> {
-            driver.get("http://localhost:8080/login");
-            return driver.getTitle() != null;
-        });
+        driver.get("http://localhost:8080/login");
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
-        driver.findElement(By.name("username")).sendKeys("user");
-        driver.findElement(By.name("password")).sendKeys("password");
+        driver.findElement(By.name("username")).sendKeys("admin@gmail.com");
+        driver.findElement(By.name("password")).sendKeys("admin123");
 
-        // Scroll to button
-        ((org.openqa.selenium.JavascriptExecutor) driver)
-                .executeScript("window.scrollTo(0, document.body.scrollHeight)");
-
-        // Click using JS
-        ((org.openqa.selenium.JavascriptExecutor) driver)
-                .executeScript("arguments[0].click();",
-                        driver.findElement(By.tagName("button")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.tagName("button"))).click();
 
         wait.until(ExpectedConditions.urlContains("dashboard"));
 
