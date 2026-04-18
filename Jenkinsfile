@@ -1,18 +1,3 @@
-// pipeline {
-//     agent any
-
-//     tools {
-//         maven 'Maven3'
-//     }
-
-//     stages {
-//         stage('Build') {
-//             steps {
-//                 bat 'mvn clean install'
-//             }
-//         }
-//     }
-// }
 pipeline {
     agent any
 
@@ -31,7 +16,7 @@ pipeline {
         stage('Start Application') {
             steps {
                 bat 'start /B java -jar target\\car-0.0.1-SNAPSHOT.jar'
-                bat 'timeout /t 20'
+                bat 'timeout /t 30'
             }
         }
 
