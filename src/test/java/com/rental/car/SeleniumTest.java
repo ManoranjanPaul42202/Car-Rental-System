@@ -39,7 +39,10 @@ public class SeleniumTest {
     @Test
     public void testValidLogin() {
 
-        driver.get("http://localhost:8080/login");
+        wait.until(driver -> {
+            driver.get("http://localhost:8080/login");
+            return driver.getTitle() != null;
+        });
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
@@ -56,7 +59,10 @@ public class SeleniumTest {
     @Test
     public void testInvalidLogin() {
 
-        driver.get("http://localhost:8080/login");
+        wait.until(driver -> {
+            driver.get("http://localhost:8080/login");
+            return driver.getTitle() != null;
+        });
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
