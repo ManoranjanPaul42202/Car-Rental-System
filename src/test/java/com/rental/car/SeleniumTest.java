@@ -63,7 +63,7 @@ public class SeleniumTest {
         driver.findElement(By.name("username")).sendKeys("wrong");
         driver.findElement(By.name("password")).sendKeys("wrong");
 
-        driver.findElement(By.tagName("button")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.tagName("button"))).click();
 
         // Wait for error message
         String errorText = wait.until(
