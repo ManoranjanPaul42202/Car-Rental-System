@@ -19,13 +19,13 @@ public class SeleniumTest {
     private WebDriverWait wait;
 
     // 🔹 Start Spring Boot App (like setup_server)
-    @BeforeAll
-    public void startServer() throws IOException, InterruptedException {
-        process = new ProcessBuilder("java", "-jar", "target/car-0.0.1-SNAPSHOT.jar")
-                .start();
+    // @BeforeAll
+    // public void startServer() throws IOException, InterruptedException {
+    //     process = new ProcessBuilder("java", "-jar", "target/car-0.0.1-SNAPSHOT.jar")
+    //             .start();
 
-        Thread.sleep(10000); // wait for app to start
-    }
+    //     Thread.sleep(10000); // wait for app to start
+    // }
 
     // 🔹 Setup driver (like pytest fixture)
     @BeforeEach
