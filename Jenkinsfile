@@ -16,7 +16,7 @@ pipeline {
         stage('Start Application') {
             steps {
                 // Start app and save logs
-                bat 'start "" /B java -jar target\\car-0.0.1-SNAPSHOT.jar > app.log 2>&1'
+                bat 'start "" /B java -jar target\\car-0.0.1-SNAPSHOT.jar --server.port=8081 > app.log 2>&1'
 
                 // Wait longer
                 bat 'ping 127.0.0.1 -n 60'
@@ -35,7 +35,7 @@ pipeline {
         stage('Stop Application') {
             steps {
                 bat '''
-                for /f "tokens=5" %%a in ('netstat -aon ^| findstr LISTENING ^| findstr :8080') do (
+                for /f "tokens=5" %%a in ('netstat -aon ^| findstr LISTENING ^| findstr :8081') do (
                     taskkill /F /PID %%a
                 )
                 '''
