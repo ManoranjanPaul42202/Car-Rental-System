@@ -39,7 +39,7 @@ public class SeleniumTest {
     @Test
     public void testValidLogin() {
 
-        driver.get("http://localhost:8080/login");
+        driver.get("http://127.0.0.1:8080/login");
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
@@ -66,8 +66,8 @@ public class SeleniumTest {
     @Test
     public void testInvalidLogin() {
 
-        driver.get("http://localhost:8080/login");
-
+        driver.get("http://127.0.0.1:8080/login");
+        
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
         driver.findElement(By.name("username")).sendKeys("wrong");
