@@ -35,8 +35,8 @@ pipeline {
         stage('Stop Application') {
             steps {
                 bat '''
-                for /f "tokens=5" %%a in ('netstat -aon ^| findstr LISTENING ^| findstr :8081') do (
-                    taskkill /F /PID %%a
+                for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8081') do (
+                    taskkill /F /PID %%a >nul 2>&1
                 )
                 '''
             }
