@@ -15,8 +15,14 @@ pipeline {
 
         stage('Start Application') {
             steps {
-                bat 'start "" /B java -jar target\\car-0.0.1-SNAPSHOT.jar'
-                bat 'ping 127.0.0.1 -n 40'
+                // Start app and save logs
+                bat 'start "" /B java -jar target\\car-0.0.1-SNAPSHOT.jar > app.log 2>&1'
+
+                // Wait longer
+                bat 'ping 127.0.0.1 -n 60'
+
+                // PRINT LOG (VERY IMPORTANT)
+                bat 'type app.log'
             }
         }
 
