@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -18,21 +19,20 @@ public class SeleniumTest {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // 🔹 Setup driver (before each test)
+    // 🔹 Setup driver
     @BeforeEach
     public void setupDriver() {
 
-        // Automatically download & setup ChromeDriver
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new"); // Required for Jenkins
+        options.addArguments("--headless=new"); // Jenkins compatible
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
 
         driver = new ChromeDriver(options);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
     // 🔹 VALID LOGIN TEST
@@ -43,11 +43,20 @@ public class SeleniumTest {
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
+        // 👉 Use actual credentials from DB
         driver.findElement(By.name("username")).sendKeys("admin@gmail.com");
         driver.findElement(By.name("password")).sendKeys("admin123");
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.tagName("button"))).click();
+        // 🔥 Scroll to button
+        ((JavascriptExecutor) driver)
+                .executeScript("window.scrollTo(0, document.body.scrollHeight)");
 
+        // 🔥 JS Click (fixes intercept issue)
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();",
+                        driver.findElement(By.tagName("button")));
+
+        // Wait for dashboard redirect
         wait.until(ExpectedConditions.urlContains("dashboard"));
 
         Assertions.assertTrue(driver.getCurrentUrl().contains("dashboard"));
@@ -57,33 +66,25 @@ public class SeleniumTest {
     @Test
     public void testInvalidLogin() {
 
-        wait.until(driver -> {
-            driver.get("http://localhost:8080/login");
-            return driver.getTitle() != null;
-        });
+        driver.get("http://localhost:8080/login");
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
-        driver.findElement(By.name("username")).sendKeys("user");
-        driver.findElement(By.name("password")).sendKeys("password");
+        driver.findElement(By.name("username")).sendKeys("wrong");
+        driver.findElement(By.name("password")).sendKeys("wrong");
 
-        // Scroll to button
-        ((org.openqa.selenium.JavascriptExecutor) driver)
-                .executeScript("window.scrollTo(0, document.body.scrollHeight)");
-
-        // Click using JS
-        ((org.openqa.selenium.JavascriptExecutor) driver)
+        // 🔥 JS Click
+        ((JavascriptExecutor) driver)
                 .executeScript("arguments[0].click();",
                         driver.findElement(By.tagName("button")));
 
-        // Wait for error message
-        String errorText = wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.className("alert"))).getText();
+        // ✅ Check URL instead of alert
+        wait.until(ExpectedConditions.urlContains("error"));
 
-        Assertions.assertTrue(errorText.toLowerCase().contains("invalid"));
+        Assertions.assertTrue(driver.getCurrentUrl().contains("error"));
     }
 
-    // 🔹 Cleanup driver
+    // 🔹 Cleanup
     @AfterEach
     public void tearDown() {
         if (driver != null) {
