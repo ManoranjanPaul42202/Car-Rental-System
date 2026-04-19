@@ -45,7 +45,7 @@ public class SeleniumTest {
 
         // 👉 Use actual credentials from DB
         driver.findElement(By.name("username")).sendKeys("Mano");
-        driver.findElement(By.name("password")).sendKeys("Mano123");
+        driver.findElement(By.name("password")).sendKeys("Mano@123");
 
         // 🔥 Scroll to button
         ((JavascriptExecutor) driver)
