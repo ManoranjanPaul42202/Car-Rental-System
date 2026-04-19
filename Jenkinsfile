@@ -15,14 +15,20 @@ pipeline {
 
         stage('Start Application') {
             steps {
-                // Start app and save logs
                 bat 'start "" /B java -jar target\\car-0.0.1-SNAPSHOT.jar --server.port=8081 > app.log 2>&1'
+            }
+        }
 
-                // Wait longer
-                bat 'ping 127.0.0.1 -n 60'
-
-                // PRINT LOG (VERY IMPORTANT)
-                bat 'type app.log'
+        stage('Wait for App') {
+            steps {
+                bat '''
+                :loop
+                curl -s http://localhost:8081/login >nul
+                if errorlevel 1 (
+                    timeout /t 2 >nul
+                    goto loop
+                )
+                '''
             }
         }
 
@@ -41,6 +47,21 @@ pipeline {
                     )
                 )
                 exit 0
+                '''
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t car-rental-app .'
+            }
+        }
+
+        stage('Docker Run') {
+            steps {
+                bat '''
+                for /f %%i in ('docker ps -q') do docker stop %%i >nul 2>&1
+                docker run -d -p 8082:8081 car-rental-app
                 '''
             }
         }
