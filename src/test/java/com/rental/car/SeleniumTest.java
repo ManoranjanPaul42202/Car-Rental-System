@@ -44,8 +44,8 @@ public class SeleniumTest {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
         // 👉 Use actual credentials from DB
-        driver.findElement(By.name("username")).sendKeys("admin@gmail.com");
-        driver.findElement(By.name("password")).sendKeys("admin123");
+        driver.findElement(By.name("username")).sendKeys("Mano");
+        driver.findElement(By.name("password")).sendKeys("Mano123");
 
         // 🔥 Scroll to button
         ((JavascriptExecutor) driver)
@@ -67,7 +67,7 @@ public class SeleniumTest {
     public void testInvalidLogin() {
 
         driver.get("http://127.0.0.1:8080/login");
-        
+
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
 
         driver.findElement(By.name("username")).sendKeys("wrong");
