@@ -36,8 +36,11 @@ pipeline {
             steps {
                 bat '''
                 for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8081') do (
-                    taskkill /F /PID %%a >nul 2>&1
+                    if not "%%a"=="0" (
+                        taskkill /F /PID %%a >nul 2>&1
+                    )
                 )
+                exit 0
                 '''
             }
         }
